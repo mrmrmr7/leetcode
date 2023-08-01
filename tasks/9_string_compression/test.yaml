@@ -1,0 +1,8 @@
+- "chars": ["a","a","b","b","c","c","c"]
+  "answer":  6
+
+- "chars": ["a"]
+  "answer": 1
+
+- "chars": ["a","b","b","b","b","b","b","b","b","b","b","b","b"]
+  "answer": 4

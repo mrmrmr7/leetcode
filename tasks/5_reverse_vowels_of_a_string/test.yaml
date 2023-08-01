@@ -1,0 +1,14 @@
+- s: hello
+  answer: holle
+
+- s: leetcode
+  answer: leotcede
+
+- s: e
+  answer: e
+
+- s: h
+  answer: h
+
+- s: aA
+  answer: Aa

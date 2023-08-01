@@ -1,0 +1,8 @@
+- s: "the sky is blue"
+  answer: "blue is sky the"
+
+- s: "  hello world  "
+  answer: "world hello"
+
+- s: "a good   example"
+  answer: "example good a"

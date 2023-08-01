@@ -1,0 +1,11 @@
+- s: "abc3[cd]xyz"
+  answer: "any"
+
+- s: "3[a2[c]]"
+  answer:  "accaccacc"
+
+- s: "3[a]2[bc]"
+  answer: "aaabcbc"
+
+- s: "2[abc]3[cd]ef"
+  answer:  "abcabccdcdcdef"

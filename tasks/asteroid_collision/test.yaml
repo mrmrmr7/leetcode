@@ -1,0 +1,8 @@
+- asteroids: [-2,-1,1,2]
+  answer: [-2,-1,1,2]
+
+- asteroids: [5,10,-5]
+  answer: [5,10]
+
+- asteroids: [8,-8]
+  answer:  []

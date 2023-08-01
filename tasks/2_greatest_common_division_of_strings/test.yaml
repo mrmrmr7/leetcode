@@ -1,0 +1,11 @@
+- str1: "ABAB"
+  str2: "AB"
+  answer: "AB"
+
+- str1: "ABABAB"
+  str2: "ABAB"
+  answer: "AB"
+
+- str1: "LEET"
+  str2: "CODE"
+  answer: ""

@@ -1,0 +1,156 @@
+# Дан массив интов. Необходимо найти максимальное число из массива,
+# которое встречается в массиве только один раз.
+nums = [5,7,3,9,4,9,8,3,1]
+
+num_to_counter = {}
+
+for num in nums:
+    nums_to_counter = nums_to_counter.get(num, 0) + 1
+
+exactly_once_elements = [key for key, val in nums_to_counter if val == 1]
+max_exactly_once_element = max(exactly_once_elements)
+
+
+
+=======================================================================
+
+
+# Есть 2 отсортированных списка. Надо их объединить и получить отсортированный.
+
+left_ids = [10, 20, 30, 40]
+right_ids = [5, 25, 45]
+res = [5, 10, 20, 25, 30, 40, 45]
+
+
+# sorted_res = sorted(left_ids + right_ids)
+# sorted_res = sorted([*left_ids, *right_ids])
+
+
+
+# while len(left_ids) > 0 and len(right_ids) > 0:
+
+left_pointer = 0
+rigth_pointer = 0
+res_arr = []
+while left_pointer < len(left_ids) \
+        or right_pointer < len(right_ids):
+
+    if left_pointer == len(left_ids):
+        res_arr += right_ids[right_pointer:]
+        break
+    elif rigth_pointer == len(right_ids):
+        res_arr += left_ids[left_pointer:]
+        break
+    elif left_ids[left_pointer] < right_ids[right_pointer]:
+        res_arr.append(left_ids[left_pointer])
+        left_pointer += 1
+    elif left_ids[left_pointer] > right_ids[right_pointer]:
+        res_arr.append(right_ids[right_pointer])
+        right_pointer += 1
+    else:
+        res_arr.append(left_ids[left_pointer])
+        left_pointer += 1
+        res_arr.append(right_ids[right_pointer])
+        right_pointer += 1
+
+
+===========================================================================
+
+
+
+-- Даны таблицы с параметрами объявлений (адрес и цена) с историчностью по одной колонке.
+-- Необходимо вывести актуальные адрес и цену для каждого объявления.
+
+create table s_item_address (
+    item_id int,
+    address varchar(100),
+    actual_date timestamp
+);
+
+create table s_item_price (
+    item_id int,
+    price int,
+    actual_date timestamp
+);
+
+WITH s_item_address_newest_raw AS (
+    SELECT item_id, address,
+        row_number() rn over (PARTITION BY item_id ORDER BY actual_date DESC)
+    FROM s_item_address
+),
+    s_item_address_newest AS (
+    SELECT item_id, address
+    FROM s_item_address_newest_raw
+    WHERE rn = 1
+),
+    s_item_price_newest_raw AS (
+    SELECT item_id, price,
+        row_number() rn over (PARTITION BY item_id ORDER BY actual_date DESC)
+    FROM s_item_price
+),
+    s_item_price_newest AS (
+    SELECT item_id, price
+    FROM s_item_price_raw
+    WHERE rn = 1
+)
+SELECT item_id, a.address, p.price
+FROM s_item_address_newest a
+FULL JOIN s_item_price_newest p
+ON a.item_id = p.item_id
+
+
+==============================================================================
+
+
+-- В репозитории хранится SQL код регламентных расчетов.
+-- Аналитики могут его менять через пулл-реквесты.
+-- После мерджа таблицы рассчитываются каждый день.
+-- Хотим знать, сколько времени проходит от создания ПР до расчета. Структура ответа:
+
+(pr_id, table_id, created_at, merge_at, calculated_at)
+
+
+-- TABLE: pull_requests
+-- pr_id = PK
+-- created_at = datetime/timestamp
+-- merge_at = datetime/timestamp
+-- table_id = int
+-- author = varchar(40)
+
+-- TABLE: tables_calcuations_info
+-- table_id = FK
+-- calculated_at = datetime/timestamp
+
+SELECT
+    pr_id,
+    table_id,
+    DATEDIFF(calculated_at, created_at) create_to_calculate_time,
+    if(calculated_at is not null, 'calculated', 'not_calculated')
+FROM pull_requests p
+LEFT JOIN table_calculations_info t
+USING (table_id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
